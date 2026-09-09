@@ -28,7 +28,7 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: 'http://localhost:3000',
     launchOptions: {
-    	slowMo: 9000,
+    	slowMo: 1000,
     },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -74,10 +74,11 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  /* Configuração para levantar o servidor automaticamente antes dos testes */
+  webServer: {
+    command: 'npm run dev',       // Comando que levanta o Next.js
+    url: 'http://localhost:3000', // URL a monitorizar
+    reuseExistingServer: !process.env.CI, // Localmente reusa, no CI levanta sempre novo
+    timeout: 120 * 1000,          // Dá 2 minutos para o Next.js legado compilar
+  },
 });
