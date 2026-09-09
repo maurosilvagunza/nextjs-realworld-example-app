@@ -1,37 +1,38 @@
-name: Playwright & Jest cI
+name: Playwright & Jest CI
 
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-   
-  jobs:
-    test: timeout-minutes: 15
+
+jobs:
+  test:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout do Código
+      - name: Checkout do Codigo
         uses: actions/checkout@v4
-          
+
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
-      
+
       - name: Instalar Dependencias
-        run: npm ci
-        
-      - name: Instalar Navegador Playwright (Chromium)
+        run: npm ci --legacy-peer-deps
+
+      - name: Instalar Navegador Playwright
         run: npx playwright install chromium --with-deps
-       
-      - name: Executar Testes Unitários e de API (jest)
+
+      - name: Executar Testes Unitarios e API
         run: npx jest
-        
-      - name: Executar Testes E2E (Playwright)
-        run: npx playwright test
-      
-      - name: Armazenar Relatório do Playwright
+
+      - name: Executar Testes E2E
+        run: npx playwright test --project=chromium
+
+      - name: Upload Relatorio Playwright
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
