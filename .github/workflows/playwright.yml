@@ -10,6 +10,8 @@ jobs:
   test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - name: Checkout do Codigo
         uses: actions/checkout@v4
