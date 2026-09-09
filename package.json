@@ -32,7 +32,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": ".*\\.test\\.tsx?$",
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/tests/"
