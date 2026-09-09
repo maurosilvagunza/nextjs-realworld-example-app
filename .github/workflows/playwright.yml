@@ -27,7 +27,7 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Executar Testes Unitarios e API
-        run: npx jest
+        run: npx jest test/
 
       - name: Executar Testes E2E
         run: npx playwright test --project=chromium
