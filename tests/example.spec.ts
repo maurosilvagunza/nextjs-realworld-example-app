@@ -25,18 +25,16 @@ test('deve navegar para a página About ao clicar no link', async ({ page }) => 
 });
 
 test('deve preencher o login e redirecionar para a home com sucesso', async ({ page }) => {
-  // 1. Intercepta a rota da API
-  await page.route('**/api/users/login', async (route) => {
+  // 1. Intercepta a rota da API e simula sucesso
+  await page.route('**/auth/login', async (route) => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
+        access_token: 'jwt-falso-de-teste',
         user: {
           email: 'teste@email.com',
-          token: 'jwt-falso-de-teste',
-          username: 'usuario_teste',
-          bio: null,
-          image: null
+          username: 'usuario_teste'
         }
       }),
     });
@@ -52,6 +50,6 @@ test('deve preencher o login e redirecionar para a home com sucesso', async ({ p
   // 4. Clica no botão LOGIN
   await page.locator('button:has-text("LOGIN")').click();
 
-  // 5. ASSERT: Espera o redirecionamento para fora da rota /login
-  await expect(page).toHaveURL('http://localhost:3000/');
+  // 5. ASSERT: Espera o redirecionamento para a página /app após o login
+  await expect(page).toHaveURL(/.*app/);
 });
